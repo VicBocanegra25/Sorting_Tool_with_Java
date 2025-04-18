@@ -1,0 +1,66 @@
+@startuml
+' Main application entry point
+class Main {
+  - inputHandler : InputHandler
+  - dataAnalyzer : DataAnalyzer
+  - resultReporter : ResultReporter
+  - logger : ILogger
+
+  + main(args: String[]) : void
+}
+
+' Handles reading numeric input from the console
+class InputHandler {
+  + readInput() : List<Integer>
+}
+
+' Processes lists of integers and produces statistics
+class DataAnalyzer {
+  + calculateStatistics(numbers: List<Integer>) : Statistics
+}
+
+' Simple data class holding result of analysis
+class Statistics {
+  - totalNumbers : int
+  - greatestNumber : int
+  - greatestCount : int
+
+  + Statistics(totalNumbers: int, greatestNumber: int, greatestCount: int)
+  + getTotalNumbers() : int
+  + getGreatestNumber() : int
+  + getGreatestCount() : int
+}
+
+' Responsible for printing formatted output
+class ResultReporter {
+  + printResults(statistics: Statistics) : void
+}
+
+' Interface for future logging;
+' could have different implementations (e.g., console, file, remote)
+interface ILogger {
+  + logInfo(message: String) : void
+  + logError(message: String) : void
+}
+
+' A simple logger implementation that logs to the console
+class ConsoleLogger implements ILogger {
+  + logInfo(message: String) : void
+  + logError(message: String) : void
+}
+
+' Handles validation or potential error checks
+' in user input or data. Could be expanded for advanced logic.
+class InputValidator {
+  + validate(numbers: List<Integer>) : boolean
+  + getValidationErrors() : List<String>
+}
+
+Main --> InputHandler : uses
+Main --> DataAnalyzer : uses
+Main --> ResultReporter : uses
+Main --> ILogger : uses
+DataAnalyzer --> Statistics : creates
+InputHandler --> InputValidator : uses
+ConsoleLogger ..> ILogger : implements
+@enduml
