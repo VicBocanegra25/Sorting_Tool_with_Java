@@ -1,37 +1,84 @@
 package sorting.data_analysis;
 
+import sorting.input_handlers.InputValidator;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataAnalyzer {
+public class DataAnalyzer<T> {
+    private final InputValidator.DataType dataType;
 
-    public Statistics calculateStatistics(List<Integer> numbers) {
-        if (numbers == null || numbers.isEmpty()) {
-            return new Statistics(0, 0, 0);
+    public DataAnalyzer(InputValidator.DataType dataType) {
+        this.dataType = dataType;
+    }
+
+    public Statistics<T> calculateStatistics(List<T> elements) {
+        if (elements == null || elements.isEmpty()) {
+            return new Statistics<>(0, null, 0, 0);
         }
 
-        int totalNumbers = numbers.size();
-        int greatestNumber = numbers.get(0);
-        int greatestCount = 1;
+        int totalElements = elements.size();
+        T greatest = null;
 
-        // Using a HashMap to count the occurrences of each number
-        Map<Integer, Integer> countMap = new HashMap<>();
+        // Find the greatest element based on data type
+        if (dataType == InputValidator.DataType.LONG) {
+            // For number type, find maximum value
+            greatest = findMaxNumber(elements);
+        } else {
+            // For string types, find the longest string
+            greatest = findLongestString(elements);
+        }
 
-        // Looping through the numbers
-        for (int number : numbers) {
-            // Update the count, add the number if not added yet
-            countMap.put(number, countMap.getOrDefault(number, 0) + 1);
-
-            // Update the greatest number if we find a larger value
-            if (number > greatestNumber) {
-                greatestNumber = number;
+        // Count occurrences of the greatest element
+        int greatestCount = 0;
+        for (T element : elements) {
+            if (element.equals(greatest)) {
+                greatestCount++;
             }
         }
 
-        // Getting the count for the greatest number
-        greatestCount = countMap.get(greatestNumber);
+        // Calculate percentage
+        int percentage = (int) Math.round((double) greatestCount / totalElements * 100);
 
-        return new Statistics(totalNumbers, greatestNumber, greatestCount);
+        return new Statistics<>(totalElements, greatest, greatestCount, percentage);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private T findMaxNumber(List<T> elements) {
+        // Safe because we know the list contains numbers when dataType is LONG
+        T max = elements.get(0);
+        for (T element : elements) {
+            long current = Long.parseLong(element.toString());
+            long maxValue = Long.parseLong(max.toString());
+            if (current > maxValue) {
+                max = element;
+            }
+        }
+        return max;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private T findLongestString(List<T> elements) {
+        // Find the longest string
+        T longest = elements.get(0);
+        int maxLength = longest.toString().length();
+
+        for (T element : elements) {
+            int currentLength = element.toString().length();
+            if (currentLength > maxLength) {
+                longest = element;
+                maxLength = currentLength;
+            } else if (currentLength == maxLength) {
+                // If same length, compare lexicographically
+                if (element.toString().compareTo(longest.toString()) < 0) {
+                    longest = element;
+                }
+            }
+        }
+
+        return longest;
     }
 }

@@ -1,26 +1,31 @@
 package sorting.data_analysis;
 
-public class Statistics {
-    private int totalNumbers;
-    private int greatestNumber;
+public class Statistics<T> {
+    private int totalElements;
+    private T greatestElement;
     private int greatestCount;
+    private int percentage;
 
-    public Statistics(int totalNumbers, int greatestNumber, int greatestCount) {
-        this.totalNumbers = totalNumbers;
-        this.greatestNumber = greatestNumber;
+    public Statistics(int totalElements, T greatestElement, int greatestCount, int percentage) {
+        this.totalElements = totalElements;
+        this.greatestElement = greatestElement;
         this.greatestCount = greatestCount;
+        this.percentage = percentage;
     }
 
-    public int getTotalNumbers() {
-        return totalNumbers;
+    public int getTotalElements() {
+        return totalElements;
     }
 
-    public int getGreatestNumber() {
-        return greatestNumber;
+    public T getGreatestElement() {
+        return greatestElement;
     }
 
     public int getGreatestCount() {
         return greatestCount;
     }
 
+    public int getPercentage() {
+        return percentage;
+    }
 }

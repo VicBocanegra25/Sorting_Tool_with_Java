@@ -3,32 +3,38 @@ package sorting;
 import sorting.data_analysis.DataAnalyzer;
 import sorting.data_analysis.Statistics;
 import sorting.input_handlers.InputHandler;
+import sorting.input_handlers.InputValidator;
 import sorting.logger.ConsoleLogger;
 import sorting.logger.ILogger;
+import sorting.parser.CommandLineParser;
 import sorting.reporter.ResultReporter;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class Main {
-    private static final DataAnalyzer dataAnalyzer = new DataAnalyzer();
-    private static final ResultReporter resultReporter = new ResultReporter();
     private static final ILogger logger = new ConsoleLogger();
-    private static final InputHandler inputHandler = new InputHandler(logger);
+    private static final CommandLineParser commandLineParser = new CommandLineParser();
 
     public static void main(final String[] args) {
         try {
-            // Reading input from the console
-            logger.logInfo("Reading input...");
-            List<Integer> numbers = inputHandler.readInput();
+            InputValidator.DataType dataType = commandLineParser.parseDataType(args);
+            // Handle input based on the data type
+            InputHandler inputHandler = new InputHandler(logger, dataType);
 
-            // Calculate statistics
-            logger.logInfo("Calculating statistics...");
-            Statistics statistics = dataAnalyzer.calculateStatistics(numbers);
+            if (dataType == InputValidator.DataType.LONG) {
+                List<Long> numbers = inputHandler.<Long>readInput();
+                DataAnalyzer<Long> analyzer = new DataAnalyzer<>(dataType);
+                Statistics<Long> statistics = analyzer.calculateStatistics(numbers);
+                ResultReporter reporter = new ResultReporter(logger);
+                reporter.printResults(dataType, statistics);
+            } else {
+                List<String> strings = inputHandler.<String>readInput();
+                DataAnalyzer<String> analyzer = new DataAnalyzer<>(dataType);
+                Statistics<String> statistics = analyzer.calculateStatistics(strings);
+                ResultReporter reporter = new ResultReporter(logger);
+                reporter.printResults(dataType, statistics);
 
-            // Print results
-            logger.logInfo("Printing results...");
-            resultReporter.printResults(statistics);
+            }
         } catch (Exception e) {
             logger.logError("An error occurred: " + e.getMessage());
             e.printStackTrace();

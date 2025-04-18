@@ -39,6 +39,15 @@ files:
   - name: src/sorting/data_analysis/Statistics.java
     visible: true
     learner_created: true
+  - name: src/stage2.md
+    visible: true
+    learner_created: true
+  - name: src/sorting/parser/CommandLineParser.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5382#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Fri, 18 Apr 2025 05:31:08 UTC"
 record: 2

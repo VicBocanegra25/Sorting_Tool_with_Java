@@ -6,7 +6,7 @@ import java.util.List;
 
 public class InputValidator {
 
-    public ValidationResult validateWithDetails(List<?> items) {
+    public ValidationResult validateWithDetails(List<?> items, DataType dataType) {
         if (items == null) {
             return new ValidationResult(false, getValidationErrors(null, ValidationErrorType.NULL_INPUT));
         }
@@ -15,18 +15,21 @@ public class InputValidator {
             return new ValidationResult(false, getValidationErrors(null, ValidationErrorType.EMPTY_LIST));
         }
 
-        for (Object item : items) {
-            try {
-                Integer.parseInt(String.valueOf(item));
-            } catch (NumberFormatException e) {
-                return new ValidationResult(false, getValidationErrors(item, ValidationErrorType.NON_INTEGER_VALUES));
+        // Validating numeric types for LONG data type
+        if (dataType == DataType.LONG) {
+            for (Object item : items) {
+                try {
+                    Integer.parseInt(String.valueOf(item));
+                } catch (NumberFormatException e) {
+                    return new ValidationResult(false, getValidationErrors(item, ValidationErrorType.NON_INTEGER_VALUES));
+                }
             }
         }
         return new ValidationResult(true, Collections.emptyList());
     }
 
-    public boolean validate(List<?> items) {
-        return validateWithDetails(items).isValid();
+    public boolean validate(List<?> items, DataType dataType) {
+        return validateWithDetails(items, dataType).isValid();
     }
 
     /**
@@ -81,5 +84,11 @@ public class InputValidator {
         public List<String> getErrors() {
             return errors;
         }
+    }
+
+    public enum DataType {
+        LONG,
+        LINE,
+        WORD
     }
 }

@@ -7,41 +7,72 @@ import java.util.*;
 public class InputHandler {
     private final InputValidator inputValidator = new InputValidator();
     private final ILogger logger;
+    private final InputValidator.DataType dataType;
 
-    public InputHandler(ILogger logger) {
+    public InputHandler(ILogger logger, InputValidator.DataType dataType) {
         this.logger = logger;
+        this.dataType = dataType;
     }
 
-    public List<Integer> readInput() {
+    public <T> List<T> readInput() {
         Scanner scanner = new Scanner(System.in);
-        List<Integer> numbers = new ArrayList<>();
+        List<T> elements = new ArrayList<>();
+        
+        switch (dataType) {
+            case LONG -> {
+                return (List<T>) readLongInput(scanner);
+            }
+            case LINE -> {
+                return (List<T>) readLineInput(scanner);
+            }
+            case WORD -> {
+                return (List<T>) readWordInput(scanner);
+            }
+            default -> {
+                return elements;
+            }
+        }
+    }
 
+    private List<Long> readLongInput(Scanner scanner) {
+        List<Long> numbers = new ArrayList<>();
         while (scanner.hasNextLine()) {
-           String line = scanner.nextLine().trim();
-            // Skip empty lines
-            if (line.isEmpty()) {
-                continue;
-            }
-            // Split the line into tokens
-            String[] tokens = line.split("\\s+");
-            List<Object> tokenObjects = new ArrayList<>();
-            for (String token: tokens) {
-                tokenObjects.add(token);
-            }
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) { continue; }
 
-            // Using the validator to check the input
-            if (!inputValidator.validate(tokenObjects)) {
-                // Process each token and report specific errors
-                processTokensWithValidation(tokens, numbers);
-            } else {
-               // Add all valid integers
-                for (String token: tokens) {
-                    numbers.add(Integer.parseInt(token));
+            String[] tokens = line.split("\\s+");
+            for (String token : tokens) {
+                try {
+                    numbers.add(Long.parseLong(token));
+                } catch (NumberFormatException e) {
+                    logger.logError("\"" + token + "\" is not a valid number.");
                 }
             }
         }
 
-    return numbers;
+        return numbers;
+    }
+
+    private List<String> readLineInput(Scanner scanner) {
+        List<String> lines = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            lines.add(line);
+        }
+        return lines;
+    }
+
+    private List<String> readWordInput(Scanner scanner) {
+        List<String> words = new ArrayList<>();
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) { continue; }
+
+            String[] tokens = line.split("\\s+");
+            words.addAll(Arrays.asList(tokens));
+        }
+        return words;
     }
 
     private void processTokensWithValidation(String[] tokens, List<Integer> numbers) {
