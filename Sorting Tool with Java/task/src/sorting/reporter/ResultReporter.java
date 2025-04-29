@@ -1,10 +1,15 @@
 package sorting.reporter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sorting.data_analysis.Statistics;
 import sorting.input_handlers.InputValidator;
 import sorting.logger.ILogger;
 
+import java.util.List;
+
 public class ResultReporter {
+    private static final Logger log = LoggerFactory.getLogger(ResultReporter.class);
     private ILogger logger;
 
     public ResultReporter(ILogger logger) {
@@ -43,4 +48,20 @@ public class ResultReporter {
                 statistics.getGreatestCount(),
                 statistics.getPercentage()));
     }
+
+    public void printSortedNumbers(List<Long> numbers) {
+        logger.logInfo(String.format("Total numbers: %d.", numbers.size()));
+
+        // Format the sorted numbers as a space-separated string
+        StringBuilder sortedNumbers = new StringBuilder("Sorted data: ");
+        for (Long number : numbers) {
+            sortedNumbers.append(number).append(" ");
+        }
+        // Remove trailing spaces
+        if (numbers.size() > 0) {
+            sortedNumbers.setLength(sortedNumbers.length() - 1);
+        }
+        logger.logInfo(sortedNumbers.toString());
+    }
+
 }

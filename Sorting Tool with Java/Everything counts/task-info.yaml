@@ -9,6 +9,45 @@ files:
   - name: test/common/SortingToolStage4Test.kt
     visible: false
     learner_created: false
+  - name: src/sorting/input_handlers/InputHandler.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/data_analysis/DataAnalyzer.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/reporter/ResultReporter.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/input_handlers/InputValidator.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/logger/ConsoleLogger.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/parser/CommandLineParser.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/logger/ILogger.java
+    visible: true
+    learner_created: true
+  - name: src/stage3.md
+    visible: true
+    learner_created: true
+  - name: src/stage2.md
+    visible: true
+    learner_created: true
+  - name: src/stage1.md
+    visible: true
+    learner_created: true
+  - name: src/umldiagram.txt
+    visible: true
+    learner_created: true
+  - name: stage2.md
+    visible: true
+    learner_created: true
+  - name: src/sorting/data_analysis/Statistics.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5384#comment
 status: Unchecked
-record: -1
+record: 4

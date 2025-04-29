@@ -15,7 +15,7 @@ files:
   - name: src/sorting/data_analysis/DataAnalyzer.java
     visible: true
     learner_created: true
-  - name: src/sorting/stage1.md
+  - name: src/stage1.md
     visible: true
     learner_created: true
   - name: src/sorting/reporter/ResultReporter.java
@@ -30,7 +30,7 @@ files:
   - name: src/sorting/parser/CommandLineParser.java
     visible: true
     learner_created: true
-  - name: src/sorting/umldiagram.txt
+  - name: src/umldiagram.txt
     visible: true
     learner_created: true
   - name: src/sorting/logger/ILogger.java
@@ -45,6 +45,12 @@ files:
   - name: src/sorting/data_analysis/Statistics.java
     visible: true
     learner_created: true
+  - name: src/stage3.md
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5383#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Tue, 29 Apr 2025 02:46:33 UTC"
 record: 3

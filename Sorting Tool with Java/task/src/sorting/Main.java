@@ -17,23 +17,34 @@ public class Main {
 
     public static void main(final String[] args) {
         try {
-            InputValidator.DataType dataType = commandLineParser.parseDataType(args);
-            // Handle input based on the data type
-            InputHandler inputHandler = new InputHandler(logger, dataType);
+            if (commandLineParser.shouldSortIntegers(args)) {
+                InputHandler inputHandler = new InputHandler(logger, InputValidator.DataType.LONG);
+                List<Long> numbers = inputHandler.readInput();
+                // Sorting the numbers
+                Collections.sort(numbers);
 
-            if (dataType == InputValidator.DataType.LONG) {
-                List<Long> numbers = inputHandler.<Long>readInput();
-                DataAnalyzer<Long> analyzer = new DataAnalyzer<>(dataType);
-                Statistics<Long> statistics = analyzer.calculateStatistics(numbers);
+                // Using the ResultReporter to display results
                 ResultReporter reporter = new ResultReporter(logger);
-                reporter.printResults(dataType, statistics);
+                reporter.printSortedNumbers(numbers);
             } else {
-                List<String> strings = inputHandler.<String>readInput();
-                DataAnalyzer<String> analyzer = new DataAnalyzer<>(dataType);
-                Statistics<String> statistics = analyzer.calculateStatistics(strings);
-                ResultReporter reporter = new ResultReporter(logger);
-                reporter.printResults(dataType, statistics);
+                InputValidator.DataType dataType = commandLineParser.parseDataType(args);
+                // Handle input based on the data type
+                InputHandler inputHandler = new InputHandler(logger, dataType);
 
+                if (dataType == InputValidator.DataType.LONG) {
+                    List<Long> numbers = inputHandler.<Long>readInput();
+                    DataAnalyzer<Long> analyzer = new DataAnalyzer<>(dataType);
+                    Statistics<Long> statistics = analyzer.calculateStatistics(numbers);
+                    ResultReporter reporter = new ResultReporter(logger);
+                    reporter.printResults(dataType, statistics);
+                } else {
+                    List<String> strings = inputHandler.<String>readInput();
+                    DataAnalyzer<String> analyzer = new DataAnalyzer<>(dataType);
+                    Statistics<String> statistics = analyzer.calculateStatistics(strings);
+                    ResultReporter reporter = new ResultReporter(logger);
+                    reporter.printResults(dataType, statistics);
+
+                }
             }
         } catch (Exception e) {
             logger.logError("An error occurred: " + e.getMessage());

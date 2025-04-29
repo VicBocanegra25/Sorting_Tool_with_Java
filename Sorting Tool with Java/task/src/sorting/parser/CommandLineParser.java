@@ -4,7 +4,18 @@ package sorting.parser;
 import sorting.input_handlers.InputValidator;
 
 public class CommandLineParser {
-    public InputValidator.DataType parseDataType(String[] args) {
+    public boolean shouldSortIntegers(String[] args) {
+        // Safety check and looking if the flag is present
+        for (String arg : args) {
+            if (arg.equals("-sortIntegers")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+        public InputValidator.DataType parseDataType(String[] args) {
         // The default type is Word if the option is not specified
         InputValidator.DataType dataType = InputValidator.DataType.WORD;
 
