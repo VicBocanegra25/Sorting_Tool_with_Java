@@ -73,6 +73,12 @@ files:
   - name: src/sorting/data_analysis/Statistics.java
     visible: true
     learner_created: true
+  - name: src/stage5.md
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5385#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 07 May 2025 01:12:17 UTC"
 record: 5

@@ -14,9 +14,11 @@ import java.util.List;
 
 
 public class Main {
-    private static final ILogger logger = new ConsoleLogger();
 
     public static void main(final String[] args) {
+        // Initialize the logger
+        ILogger logger = new ConsoleLogger();
+
         // Parse command line arguments
         CommandLineParser parser = new CommandLineParser(logger);
         CommandOptions options = parser.parseOptions(args);

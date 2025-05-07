@@ -29,6 +29,7 @@ public class InputHandler {
                 return (List<T>) readWordInput(scanner);
             }
             default -> {
+                logger.logInfo("Unknown data type: " + dataType);
                 return elements;
             }
         }
@@ -45,7 +46,7 @@ public class InputHandler {
                 try {
                     numbers.add(Long.parseLong(token));
                 } catch (NumberFormatException e) {
-                    logger.logError("\"" + token + "\" is not a valid number.");
+                    logger.logInfo("\"" + token + "\" is not a long. It will be skipped.");
                 }
             }
         }
@@ -75,6 +76,7 @@ public class InputHandler {
         return words;
     }
 
+    @Deprecated
     private void processTokensWithValidation(String[] tokens, List<Integer> numbers) {
         for (String token: tokens) {
             try {

@@ -56,7 +56,7 @@ public class CommandLineParser {
             String currentArg = args[i];
 
             if (currentArg.equals(DATA_TYPE_FLAG)) {
-                if (i + 1 < args.length) {
+                if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                     InputValidator.DataType determinedType = determineDataType(args[i + 1]);
                     if (determinedType != null) {
                         dataType = determinedType;
@@ -68,7 +68,7 @@ public class CommandLineParser {
                     logger.logError("No data type defined!");
                 }
             } else if (currentArg.equals(SORTING_TYPE_FLAG)) {
-                if (i + 1 < args.length) {
+                if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                     SortingType determinedType = determineSortingType(args[i + 1]);
                     if (determinedType != null) {
                         sortingType = determinedType;
@@ -81,7 +81,7 @@ public class CommandLineParser {
                 }
             // It does include an option, but it is not among the valid options
             } else if (currentArg.startsWith("-")) {
-                logger.logInfo("Unknown argument: " + currentArg);
+                logger.logInfo("\"" + currentArg + "\" is not a valid parameter. It will be skipped.");
             }
         }
         return new CommandOptions(sortingType, dataType);
