@@ -1,11 +1,9 @@
 package sorting.data_analysis;
 
 import sorting.input_handlers.InputValidator;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Deprecated
 public class DataAnalyzer<T> {
     private final InputValidator.DataType dataType;
 

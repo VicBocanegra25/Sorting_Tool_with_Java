@@ -1,5 +1,6 @@
 package sorting.data_analysis;
 
+@Deprecated
 public class Statistics<T> {
     private int totalElements;
     private T greatestElement;

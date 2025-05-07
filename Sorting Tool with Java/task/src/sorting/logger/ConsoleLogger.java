@@ -4,7 +4,7 @@ public class ConsoleLogger implements ILogger {
     
     @Override
     public void logInfo(String message) {
-        System.out.println("[INFO] " + message);
+        System.out.println("" + message);
     }
     
     @Override

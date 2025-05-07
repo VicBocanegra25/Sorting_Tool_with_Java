@@ -1,54 +1,37 @@
 package sorting;
 
-import sorting.data_analysis.DataAnalyzer;
-import sorting.data_analysis.Statistics;
 import sorting.input_handlers.InputHandler;
 import sorting.input_handlers.InputValidator;
 import sorting.logger.ConsoleLogger;
 import sorting.logger.ILogger;
 import sorting.parser.CommandLineParser;
+import sorting.parser.CommandOptions;
 import sorting.reporter.ResultReporter;
+import sorting.sorter.Sorter;
+import sorting.sorter.SorterFactory;
 
-import java.util.*;
+import java.util.List;
+
 
 public class Main {
     private static final ILogger logger = new ConsoleLogger();
-    private static final CommandLineParser commandLineParser = new CommandLineParser();
 
     public static void main(final String[] args) {
-        try {
-            if (commandLineParser.shouldSortIntegers(args)) {
-                InputHandler inputHandler = new InputHandler(logger, InputValidator.DataType.LONG);
-                List<Long> numbers = inputHandler.readInput();
-                // Sorting the numbers
-                Collections.sort(numbers);
+        // Parse command line arguments
+        CommandLineParser parser = new CommandLineParser(logger);
+        CommandOptions options = parser.parseOptions(args);
 
-                // Using the ResultReporter to display results
-                ResultReporter reporter = new ResultReporter(logger);
-                reporter.printSortedNumbers(numbers);
-            } else {
-                InputValidator.DataType dataType = commandLineParser.parseDataType(args);
-                // Handle input based on the data type
-                InputHandler inputHandler = new InputHandler(logger, dataType);
+        // Read input based on the specified data type
+        InputHandler inputHandler = new InputHandler(logger, options.getDataType());
+        List<?> inputData = inputHandler.readInput();
 
-                if (dataType == InputValidator.DataType.LONG) {
-                    List<Long> numbers = inputHandler.<Long>readInput();
-                    DataAnalyzer<Long> analyzer = new DataAnalyzer<>(dataType);
-                    Statistics<Long> statistics = analyzer.calculateStatistics(numbers);
-                    ResultReporter reporter = new ResultReporter(logger);
-                    reporter.printResults(dataType, statistics);
-                } else {
-                    List<String> strings = inputHandler.<String>readInput();
-                    DataAnalyzer<String> analyzer = new DataAnalyzer<>(dataType);
-                    Statistics<String> statistics = analyzer.calculateStatistics(strings);
-                    ResultReporter reporter = new ResultReporter(logger);
-                    reporter.printResults(dataType, statistics);
+        // Using a factory to create the appropriate sorter based on the options
+        Sorter<?> sorter = SorterFactory.createSorter(options.getSortingType());
+        List<?> sortedData = sorter.sort(inputData);
 
-                }
-            }
-        } catch (Exception e) {
-            logger.logError("An error occurred: " + e.getMessage());
-            e.printStackTrace();
-        }
+        // Report the results
+        ResultReporter reporter = new ResultReporter(logger);
+        reporter.printResults(options.getDataType(), options.getSortingType(), sortedData);
     }
+
 }

@@ -48,6 +48,33 @@ files:
   - name: src/sorting/data_analysis/Statistics.java
     visible: true
     learner_created: true
+  - name: src/stage4.md
+    visible: true
+    learner_created: true
+  - name: src/sorting/parser/SortingType.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/parser/CommandOptions.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/sorter/SortingStrategy.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/sorter/Sorter.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/sorter/NaturalSortStrategy.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/sorter/CountBasedSortStrategy.java
+    visible: true
+    learner_created: true
+  - name: src/sorting/sorter/SorterFactory.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5384#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 05 May 2025 15:48:04 UTC"
 record: 4
