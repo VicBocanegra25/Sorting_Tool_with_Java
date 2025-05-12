@@ -1,37 +1,55 @@
 package sorting.input_handlers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sorting.logger.ILogger;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class InputHandler {
+    private static final Logger log = LoggerFactory.getLogger(InputHandler.class);
     private final InputValidator inputValidator = new InputValidator();
     private final ILogger logger;
+    private final File inputFile;
     private final InputValidator.DataType dataType;
 
-    public InputHandler(ILogger logger, InputValidator.DataType dataType) {
+    public InputHandler(ILogger logger, InputValidator.DataType dataType, File inputFile) {
         this.logger = logger;
         this.dataType = dataType;
+        this.inputFile = inputFile;
     }
 
     public <T> List<T> readInput() {
-        Scanner scanner = new Scanner(System.in);
         List<T> elements = new ArrayList<>();
-        
-        switch (dataType) {
-            case LONG -> {
-                return (List<T>) readLongInput(scanner);
+        try (Scanner scanner = createScanner()) {
+            switch (dataType) {
+                case LONG -> {
+                    return (List<T>) readLongInput(scanner);
+                }
+                case LINE -> {
+                    return (List<T>) readLineInput(scanner);
+                }
+                case WORD -> {
+                    return (List<T>) readWordInput(scanner);
+                }
+                default -> {
+                    logger.logInfo("Unknown data type: " + dataType);
+                    return elements;
+                }
             }
-            case LINE -> {
-                return (List<T>) readLineInput(scanner);
+        } catch (FileNotFoundException e) {
+                logger.logError("File nto found: " + e.getMessage());
             }
-            case WORD -> {
-                return (List<T>) readWordInput(scanner);
-            }
-            default -> {
-                logger.logInfo("Unknown data type: " + dataType);
-                return elements;
-            }
+        return elements;
+    }
+
+    private Scanner createScanner() throws FileNotFoundException {
+        if (inputFile != null) {
+            return new Scanner(inputFile);
+        } else {
+            return new Scanner(System.in);
         }
     }
 

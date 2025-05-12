@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="common.SortingToolStage5Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-07T01:12:16" hostname="DESKTOP-GSLME3N" time="0.681">
+<testsuite name="common.SortingToolStage6Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-05-12T13:54:35" hostname="DESKTOP-GSLME3N" time="0.843">
   <properties/>
-  <testcase name="start" classname="common.SortingToolStage5Test" time="0.681"/>
+  <testcase name="start" classname="common.SortingToolStage6Test" time="0.843"/>
   <system-out><![CDATA[?[1;31m
 Start test 1?[0m
 > 1 -2   333 4
@@ -126,6 +126,22 @@ Sorted data:
 22222
 3
 44
+?[1;31m
+Start test 13?[0m
+Total words: 7.
+-2: 1 time(s), 14%
+333: 1 time(s), 14%
+4: 1 time(s), 14%
+42: 1 time(s), 14%
+1: 3 time(s), 42%
+?[1;31m
+Start test 14?[0m
+?[1;31m
+Start test 15?[0m
+Total words: 7.
+Sorted data: -2 1 1 1 333 4 42
+?[1;31m
+Start test 16?[0m
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
